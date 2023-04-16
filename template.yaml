@@ -1,0 +1,35 @@
+Resources:
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: my-example-bucket
+
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t3.small
+      ImageId: ami-0c94855ba95c71c99 # Replace with your desired AMI ID
+      KeyName: my-key-pair
+      SecurityGroupIds:
+        - sg-0123456789abcdef # Replace with your desired security group ID
+      SubnetId: subnet-0123456789abcdef # Replace with your desired subnet ID
+
+  MyRDSInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceClass: db.t3.micro
+      Engine: mysql
+      EngineVersion: "5.7"
+      MasterUsername: myuser
+      MasterUserPassword: mypassword
+      DBName: mydatabase
+      AllocatedStorage: 10
+      VPCSecurityGroups:
+        - sg-0123456789abcdef # Replace with your desired security group ID
+      DBSubnetGroupName: my-db-subnet-group
+      MultiAZ: false
+      PubliclyAccessible: true
+      StorageType: gp2
+      Tags:
+        - Key: Name
+          Value: my-rds-instance

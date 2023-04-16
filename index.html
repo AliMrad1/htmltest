@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>StudentsGrades</title>
+  </head>
+  <body>
+    <form id="myForm">
+      <input type="text" name="code" placeholder="Enter student code" /><br />
+      <input type="text" name="grademid" placeholder="Enter midterm exam grade" /><br />
+      <input type="text" name="gradefinal" placeholder="Enter final exam grade" /><br />
+      <button type="submit">Submit</button>
+    </form>
+
+    <script>
+      const form = document.getElementById('myForm');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formData = {
+          code: form.elements.code.value,
+          midterm: form.elements.grademid.value,
+          final: form.elements.gradefinal.value
+        };
+
+        fetch("https://4fho3i8wo9.execute-api.eu-north-1.amazonaws.com/calculateFinalGrade", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+          })
+          .then(response => response.json())
+          .then(data => alert(data.message))
+          .catch(error => alert(error));
+      });
+    </script>
+  </body>
+</html>
